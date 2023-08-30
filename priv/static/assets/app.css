@@ -893,6 +893,10 @@ select {
   grid-column: span 11 / span 11;
 }
 
+.col-span-12 {
+  grid-column: span 12 / span 12;
+}
+
 .-m-3 {
   margin: -0.75rem;
 }
@@ -920,6 +924,11 @@ select {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .mb-0 {

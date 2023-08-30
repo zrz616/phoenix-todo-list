@@ -185,6 +185,8 @@ defmodule AppWeb.CoreComponents do
   """
   attr :for, :any, required: true, doc: "the datastructure for the form"
   attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
+  attr :formClass, :string, default: nil, doc: "specify the class for the form"
+  attr :wrapperClass, :string, default: nil, doc: "Specify the class for the input wrapper"
 
   attr :rest, :global,
     include: ~w(autocomplete name rel action enctype method novalidate target multipart),
@@ -195,8 +197,8 @@ defmodule AppWeb.CoreComponents do
 
   def simple_form(assigns) do
     ~H"""
-    <.form class="mb-0 border-none" :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 mb-0 border-none bg-neutral-100">
+    <.form class={@formClass || "mb-0 border-none"} :let={f} for={@for} as={@as} {@rest}>
+      <div class={@wrapperClass || "mt-10 mb-0 border-none bg-neutral-100"}>
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="border-none mt-0 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
@@ -364,7 +366,7 @@ defmodule AppWeb.CoreComponents do
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
     ~H"""
-    <div class={["relative", @inputClass]} phx-feedback-for={@name}>
+    <div class={@inputClass || "grid grid-cols-12"} phx-feedback-for={@name}>
       <.label :if={@label} for={@id} labelClass={@labelClass}><%= @label %></.label>
       <input
         type={@type}
@@ -373,7 +375,9 @@ defmodule AppWeb.CoreComponents do
         placeholder={@placeholder}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block bg-white w-full rounded-none p-4 pl-14 text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          @label && "col-span-11",
+          @label == false && "col-span-12",
+          "mt-0 block bg-white w-full rounded-none p-4 text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
           @errors == [] && "border-none shadow-inner",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}

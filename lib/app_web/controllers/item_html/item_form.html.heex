@@ -1,15 +1,25 @@
-<.simple_form :let={f} for={@changeset} action={@action}>
+<.simple_form 
+  formClass={@action != "/items" && "h-[57px] col-span-11"} 
+  wrapperClass={@action != "/items" && "my-0 border-none border-gray-100 bg-neutral-100"} 
+  :let={f} 
+  method={if @action == "/items" do "post" else "put" end}
+  for={@changeset} 
+  action={@action}>
   <.error :if={@changeset.action}>
     Oops, something went wrong! Please check the errors below.
   </.error>
   <.input
     field={f[:text]}
     type="text"
-    label="❯"
-    labelClass="absolute top-[15px] text-lg left-[28px] rotate-90 text-gray-300"
-    placeholder="What need to be done?"
+    label={@action == "/items" && "❯"}
+    labelClass={[
+      "text-lg rotate-90 text-gray-300",
+    ]}
+    placeholder={@value || "What need to be done?"}
   />
-  <.input field={f[:status]} type="hidden" labelClass="hidden" value={0} label="Status" />
+  <%= if @action == "/items" do %>
+    <.input field={f[:status]} type="hidden" labelClass="hidden" value={0} label="Status" />
+  <% end %>
   <%!-- <.input field={f[:person_id]} type="number" label="Person" />
   <.input field={f[:status]} type="number" label="Status" /> --%>
   <:actions>
