@@ -377,7 +377,7 @@ defmodule AppWeb.CoreComponents do
         class={[
           @label && "col-span-11",
           @label == false && "col-span-12",
-          "mt-0 block bg-white w-full rounded-none p-4 text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
+          "mt-0 block bg-white w-full rounded-none pl-0 p-4 text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
           @errors == [] && "border-none shadow-inner",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
